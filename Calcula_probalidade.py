@@ -1,5 +1,5 @@
 from fractions import Fraction # Importa o módulo que trata de frações
-from math import trunc # Importa a função "Trunc"
+from math import trunc # Importa a função "trunc"
 
 
 class Calcula_probabilidade:
@@ -15,11 +15,14 @@ class Calcula_probabilidade:
             abates_feitos = 0
         for i in range(1,10):  # Contador de 1 até 9
             for c in range(30, 91, 10): # Contadoor de 30 até 90 de dez em dez
-                chances[f'{c}%'] = trunc(c/((float(abates_feitos) - float(probabilidade)))) # Chances na posição c irá receber  cálculo de probabilidade
+
+                chances[f'{c}%'] = trunc(((c/100)/float(probabilidade)) - float(abates_feitos)) # Chances na posição c irá receber  cálculo de probabilidade
                 if i == 8:
-                    chances['95%'] = trunc(95/((float(abates_feitos) - float(probabilidade)))) # Se o índice for igua a oito, chances na posição 95 irá receber o cálculo de 95% 
+                    
+                        chances['95%'] = trunc(((95/100)/float(probabilidade)) - float(abates_feitos)) # Se o índice for igual a oito, chances na posição 95 irá receber o cálculo de 95% 
                 if i == 9:
-                    chances['97%'] = trunc(97/((float(abates_feitos) - float(probabilidade)))) # A mesma coisa do anterior porém com 97% 
+
+                        chances['97%'] = trunc(((97/100)/float(probabilidade)) - float(abates_feitos)) # A mesma coisa do anterior porém com 97% 
         return chances
     
 
@@ -33,7 +36,7 @@ class Calcula_probabilidade:
         lista = []
 
         for k,v in self.__chances.items():
-            lista.append(f'Para você ter {k} de chances de conseguir o item você deverá matar {str(v).replace("-","")} inimigos no jogo.') # A lista adciona a string retirando o sinal "-" do valor se houver
+            lista.append(f'Para você ter {k} de chances de conseguir o item você deverá matar {0 if v < 0 else v} inimigos no jogo.') # A lista adciona a string retirando o sinal "-" do valor se houver
         return lista
         
 
